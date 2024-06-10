@@ -1,10 +1,8 @@
 import streamlit as st
 import fitz  # PyMuPDF
-import os
 import vertexai
 from vertexai.generative_models import GenerativeModel
 import vertexai.preview.generative_models as generative_models
-import streamlit.components.v1 as components
 import pyperclip
 import strip_markdown
 
