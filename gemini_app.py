@@ -81,7 +81,7 @@ def multiturn_generate_content(text, container):
         "gemini-1.5-pro-001",
         system_instruction=[textsi_1]
     )
-    chat = model.start_chat()
+    chat = model.start_chat(response_validation= False)
     full_summary = ""
     for response in chat.send_message(text, generation_config=generation_config, safety_settings=safety_settings, stream=True):
         full_summary += response.candidates[0].content.parts[0].text
