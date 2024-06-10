@@ -1,3 +1,4 @@
+from turtle import onclick
 import streamlit as st
 import fitz  # PyMuPDF
 import vertexai
@@ -99,8 +100,9 @@ def main():
         
         if text:
             st.success("El PDF ha sido convertido exitosamente.")
+            select_encoding = st.selectbox("Selecciona la codificación del texto", ["utf-8", "latin-1", "windows-1252"])
             output_path = uploaded_file.name.replace(".pdf", "_output.txt")
-            with open(output_path, "w", encoding="utf-8", errors="replace") as output_file:
+            with open(output_path, "w", encoding=select_encoding, errors="replace") as output_file:
                     output_file.write(text)
             
             st.session_state.show_ai_button = True
@@ -113,19 +115,12 @@ def main():
                st.session_state.show_success = False
                st.session_state.summary_container = st.empty()
                summary = multiturn_generate_content(text,  st.session_state.summary_container )
-               copy_button = st.button("Copiar Resumen al Portapapeles")
-               if copy_button:
-                     pyperclip.copy(strip_markdown.strip_markdown(summary))
-
-                     st.success("El resumen ha sido copiado al portapapeles.")
+      
                user_input = st.text_area("¿Quieres ajustar algo en el resumen?", height=100)
                if user_input:
                    adjusted_input = "Instrucción adicional del usuario: " + user_input + "\n\nResumen generado previamente:\n" + summary +  "\n\nTexto original del documento:\n" + text
                    adjusted_summary = multiturn_generate_content(adjusted_input,  st.session_state.summary_container )
-                   copy_button_2 = st.button("Copiar Resumen al Portapapeles", key =  "copy_button_2")
-                   if copy_button_2:
-                        pyperclip.copy(strip_markdown.strip_markdown(adjusted_summary))
-                        st.success("El resumen ha sido copiado al portapapeles.")
+
             elif save_button :
                 st.session_state.show_success = True
                 if st.session_state.show_success:
