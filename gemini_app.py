@@ -1,12 +1,8 @@
-from turtle import onclick
 import streamlit as st
 import fitz  # PyMuPDF
 import vertexai
 from vertexai.generative_models import GenerativeModel
 import vertexai.preview.generative_models as generative_models
-import pyperclip
-import strip_markdown
-
 
 # Inicialización de Vertex AI con las credenciales de tu proyecto
 
